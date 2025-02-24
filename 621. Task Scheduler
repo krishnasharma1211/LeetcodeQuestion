@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+      int freq[26] = {0};
+        for (char &ch: tasks) freq[ch-'A'] ++;
+        sort(freq, freq+26); 
+        int maxingaps = freq[25]-1; 
+        int maxidle = maxingaps*n; 
+        for (int i=24; i>=0; i--) {
+            int f = freq[i];
+            if (f==0) break; 
+            maxidle -= min(f, maxingaps); 
+            if (maxidle<=0) break;
+        }
+        return tasks.size() + (maxidle>0 ? maxidle : 0);   
+    }
+};
